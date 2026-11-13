@@ -1,0 +1,7 @@
+granular-pushing
+Copyright 2026 ETH Zurich, Autonomous Systems Lab
+
+This product includes software from Newton (https://github.com/newton-physics/newton),
+licensed under the Apache License 2.0:
+granular_pushing/mpm/mpm_sim.py is modified from newton/examples/mpm/example_mpm_granular.py
+(Newton commit e5f6493). Copyright (c) 2025 The Newton Developers.

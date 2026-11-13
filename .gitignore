@@ -1,0 +1,7 @@
+data/
+outputs/
+.home/
+.venv/
+__pycache__/
+*.egg-info/
+.DS_Store

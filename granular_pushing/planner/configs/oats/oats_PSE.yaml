@@ -1,0 +1,58 @@
+# ==========================================
+# Experiment & Path Configuration
+# ==========================================
+system:
+  active_root: "/tmp/planner_active"
+  archive_root: "/tmp/planner_archive"
+  ply_location: "sorted_by_type/point_cloud_0_cropped_in_workplane"
+  store_nested: true
+  n_steps: 10   # pushes planned from the single PRESWEEP scan (--n-steps overrides)
+  viz_max_height: 0.05
+
+# ==========================================
+# 1. Mapping Configuration (Environment)
+# ==========================================
+mapping:
+  map_width: 0.75
+  map_resolution: 0.005
+  agg_method: "median"
+  height_cutoff: 0.005
+
+# ==========================================
+# 2. Planner Configuration
+# ==========================================
+planner:
+  planner_type: "clearance"
+
+  clearance_region:
+    center: [-0.05, 0.0]  # [x, y] coordinates in meters
+    radius: 0.075         # radius in meters
+
+  start_bounds: [[-0.235, -0.165], [0.085, 0.165]]
+  end_bounds: [[0.0, 0.3], [-0.3, 0.3]]
+
+  clearance:
+    selection_strategy: "exhaustive"
+    min_sweep_len: 0.01
+    sweep_patterns: ['Radial']
+
+    radial_config:
+      xy_center: [-0.05, 0.0]       # The central hub [X, Y] in metric coordinates
+      radius_sets:                # [start radius, end radius, colour in the live window]
+        - [0.0, 0.075, 'cyan']       # Short Outward (Cyan)
+        - [0.0, 0.125, 'blue']        # Long Outward (Blue)
+        - [0.14, 0.075, 'orange']    # Short Inward (Orange)
+        - [0.14, 0.0, 'red']        # Long Inward (Red)
+
+# ==========================================
+# 3. HBM Configs
+# ==========================================
+# Default parameters for the sweepModelDisplacementAndErosion
+
+# OAT FLAKES, PSE (dump angle = 89 deg, with erosion)
+hbm:
+  sweep_width: 0.075
+  erosion_stencil: 'bloc-5'
+  aor: 25.0
+  dump_base_angle_deg: 89.0
+  erosion_max_iters: 5000

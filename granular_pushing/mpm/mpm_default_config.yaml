@@ -1,0 +1,78 @@
+# --- System & Logging ---
+exp_name: "mpm_simulation"
+log_directory: "/tmp"
+render_depth: false
+apply_sweeps: true
+mpm_settling_time: 0.5
+random_seed: 42
+timed_run: false
+
+# --- Simulation Stepping ---
+# Physics dT = 1 / (fps * substeps)
+fps: 30.0
+substeps: 30
+gravity: [0.0, 0.0, -9.81]
+
+# --- MPM Material Properties ---
+# Note: These names must match SolverImplicitMPM.Options attributes
+groundplane_mu: 0.51 # ground friction
+friction_coeff: 0.71 # material friction
+density: 689 # material density [kg/m³]
+yield_stress: 0
+critical_fraction: 0.76
+#
+young_modulus: 1.0e15
+poisson_ratio: 0.3
+yield_pressure: 1.0e12
+hardening: 0.0
+air_drag: 1.0
+tensile_yield_ratio: 0.0
+damping: 0.0
+
+# --- MPM Solver & Grid ---
+jitter_scale: 1.0
+grid_type: "sparse"
+voxel_size: 0.00515
+particles_per_voxel: 27
+solver: "gauss-seidel"
+transfer_scheme: "apic"
+strain_basis: "P0"
+max_iterations: 250
+tolerance: 1.0e-6
+grid_padding: 0
+max_active_cell_count: -1
+
+# --- Spatula (Kinematic Body) Properties ---
+spatula_width: 0.07 # units: meters
+spatula_height: 0.15 # units: meters
+spatula_thickness: 0.01 # units: meters
+sweep_speed: 0.1 # units: meters/second
+spatula_safe_pose: [0.8, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0] # [x, y, z, qw, qx, qy, qz]
+
+# --- Sweep Trajectories ---
+# Format: [start_x, start_y, end_x, end_y]; units: meters
+sweeps_xy: 
+  - [0.15, -0.5, 0.0, 0.15]
+  - [-0.15, 0.0, 0.15, 0.0]
+
+# --- Particle Emission Geometry ---
+init_from_heightmap: true
+init_heightmap_path: ""
+init_prism_is_cylinder: true
+init_prism_center: [0.0, 0.0, 0.0]
+init_prism_size: 1.0
+init_prism_height: 1.0
+
+# --- Sensor & Camera Setup ---
+depth_res: 1024
+depth_fov_deg: 60
+camera_pos: [0.0, 0.0, 1.0]
+camera_direction: [0.0, 0.0, -1.0]
+camera_up: [1.0, 0.0, 0.0]
+sensor_max_dist: 3.0
+
+# --- GUI / Viewer Settings ---
+viewer_enabled: true
+viewer_pos: [0.4, 0.0, 0.15]
+viewer_pitch_deg: -15
+viewer_yaw_deg: 180.0

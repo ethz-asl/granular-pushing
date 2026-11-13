@@ -1,0 +1,40 @@
+[project]
+name = "granular-pushing"
+version = "1.0.0"
+description = "Heightmap-based models (HBM) and MPM for robotic pushing of granular materials (RA-L 2026)"
+license = "Apache-2.0"
+requires-python = "==3.11.*"
+dependencies = [
+    # Newton (MPM) at the exact commit used for the paper.
+    "newton @ git+https://github.com/newton-physics/newton@e5f6493d9a1616576e2e086a20506058b84c7fb8",
+    # Stable warp from PyPI. The paper's results were produced with the nightly
+    # warp-lang 1.12.0.dev20260115, which NVIDIA no longer distributes.
+    "warp-lang==1.12.0",
+    # Analysis packages, at the versions of the environment used for the paper.
+    "numpy==2.3.4",
+    "numba==0.63.1",
+    "llvmlite==0.46.0",
+    "scipy==1.16.3",
+    "matplotlib==3.10.8",
+    "pandas==2.3.3",
+    "open3d==0.19.0",
+    "shapely==2.1.2",
+    "scikit-image==0.26.0",
+    "scikit-learn==1.8.0",
+    "pyyaml==6.0.3",
+    "ruamel-yaml==0.19.1",
+    "pillow==12.0.0",
+    # Needed by pandas DataFrame.to_markdown() in the evaluation scripts.
+    "tabulate>=0.9",
+    # Newton's OpenGL viewer (GUI only; versions from Newton's "examples" extra).
+    "pyglet>=2.1.6",
+    "imgui-bundle>=1.92.0",
+]
+
+[tool.uv]
+# Not an installable package: the code runs from the repo (see docker/Dockerfile).
+package = false
+# Newton's own config asks for a warp nightly from NVIDIA's index. Use the stable release instead.
+override-dependencies = ["warp-lang==1.12.0"]
+# The Docker image is Linux x86_64 only.
+environments = ["sys_platform == 'linux' and platform_machine == 'x86_64'"]
